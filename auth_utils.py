@@ -31,6 +31,7 @@ class AuthJwtCsrf():
     def decode_jwt(self, token) -> str:
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
+            print(payload)
             return payload['sub']
         except jwt.ExpiredSignatureError:
             raise HTTPException(
@@ -47,6 +48,7 @@ class AuthJwtCsrf():
                 status_code=401, detail='No JWT exist: may not set yet or deleted'
             )
         value = token.partition(" ")
+        print(value)
         subject = self.decode_jwt(value)
         print(subject)
         return subject
