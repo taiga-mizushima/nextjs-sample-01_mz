@@ -30,8 +30,10 @@ class AuthJwtCsrf():
     
     def decode_jwt(self, token) -> str:
         try:
+            print(JWT_KEY)
+            print(self.secret_key)
+            print(token)
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
-            print(payload)
             return payload['sub']
         except jwt.ExpiredSignatureError:
             raise HTTPException(
@@ -50,7 +52,6 @@ class AuthJwtCsrf():
         value = token.partition(" ")
         print(value)
         subject = self.decode_jwt(value)
-        print(subject)
         return subject
 
     def verify_update_jwt(self, request) -> tuple[str, str]:
