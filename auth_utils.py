@@ -41,12 +41,14 @@ class AuthJwtCsrf():
     
     def verify_jwt(self, request) -> str:
         token = request.cookies.get("access_token")
+        print(token)
         if not token:
             raise HTTPException(
                 status_code=401, detail='No JWT exist: may not set yet or deleted'
             )
         value = token.partition(" ")
         subject = self.decode_jwt(value)
+        print(subject)
         return subject
 
     def verify_update_jwt(self, request) -> tuple[str, str]:
